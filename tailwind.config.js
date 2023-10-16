@@ -2,7 +2,12 @@
 export default {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'tablet': { 'max': '1250px' },
+        'mobile': {'max': '800px'}
+      },
+    },
   },
   plugins: [],
 }

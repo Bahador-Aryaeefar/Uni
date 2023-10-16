@@ -1,6 +1,7 @@
 <template>
-    <div dir="rtl">
+    <div class="max-w-[110rem] mx-auto pb-[20rem]" dir="rtl">
         <slot/>
+        <LandingFooter></LandingFooter>
     </div>
 </template>
 
