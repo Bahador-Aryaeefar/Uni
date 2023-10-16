@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
-        <LandingNavbar></LandingNavbar>
-        <LandingBody class="z-[-1]"></LandingBody>
+        <LandingNavbar class="z-[1] relative"></LandingNavbar>
+        <LandingBody></LandingBody>
     </div>
 </template>
 
