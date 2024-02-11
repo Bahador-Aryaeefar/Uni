@@ -5,11 +5,7 @@
                 <h3 class="text-white text-sm font-bold">کلاس های فعال</h3>
                 <div
                     class="grid gap-6 mt-6 grid-cols-[repeat(3,1fr)] tablet:grid-cols-[repeat(2,1fr)] mobile:grid-cols-[repeat(1,1fr)]">
-                    <Class class=""></Class>
-                    <Class class=""></Class>
-                    <Class class=""></Class>
-                    <Class class=""></Class>
-                    <Class class=""></Class>
+                    <Class v-for="item in actives" :info="item" class=""></Class>
                 </div>
             </div>
         </div>
@@ -20,12 +16,19 @@
             <h3 class="text-black text-sm font-bold">کلاس های غیر فعال</h3>
             <div
                 class="grid gap-6 mt-6 grid-cols-[repeat(3,1fr)] tablet:grid-cols-[repeat(2,1fr)] mobile:grid-cols-[repeat(1,1fr)]">
-                <ClassOff class=""></ClassOff>
-                <ClassOff class=""></ClassOff>
-                <ClassOff class=""></ClassOff>
-                <ClassOff class=""></ClassOff>
-                <ClassOff class=""></ClassOff>
+                <ClassOff v-for="item in deactives" :info="item" class=""></ClassOff>
             </div>
         </div>
     </div>
 </template>
+
+<script setup>
+const prof = useProf()
+const actives = computed(() => {
+    return prof.classes.value
+})
+const deactives = computed(() => {
+    return prof.classes.value
+})
+prof.getClasses()
+</script>
