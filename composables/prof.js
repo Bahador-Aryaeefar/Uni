@@ -4,6 +4,7 @@ export const useProf = () => {
 
     const getClasses = async () => {
         console.log('getClasses')
+        classes.value = null
         await useFetch('/api/Professor/GetAllCourse', {
             method: 'Get',
             credentials: 'include',
