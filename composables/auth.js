@@ -1,16 +1,18 @@
 export const useAuth = () => {
     const router = useRouter()
+    const name = useState('name', () => null)
 
     const isLogin = () => {
-        const cookie = useCookie('pas_token', {httpOnly: true})
+        const cookie = useCookie('name')
         if (cookie.value != null) {
             return true
         }
-        return true
+        return false
     }
 
     const login = async (req) => {
         console.log('login')
+        const cookie = useCookie('name')
         await useFetch('/api/Account/Login', {
             method: 'POST',
             body: req,
@@ -24,6 +26,7 @@ export const useAuth = () => {
                 // Process the response data    return response._data
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
+                    cookie.value = response?._data?.data?.fullNameUser
                     navigateTo('/')
                 }
             },
@@ -38,6 +41,7 @@ export const useAuth = () => {
 
     const logout = async () => {
         console.log('Logout')
+        const cookie = useCookie('name')
         await useFetch('/api/Account/Logout', {
             method: 'GET',
             credentials: 'include',
@@ -51,6 +55,8 @@ export const useAuth = () => {
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
                     navigateTo('/auth')
+                    cookie.value = null
+                    name.value = null
                 }
             },
             onResponseError({ request, response, options }) {
@@ -62,5 +68,5 @@ export const useAuth = () => {
         })
     }
 
-    return { login, logout, isLogin }
+    return { login, logout, isLogin, name }
 }

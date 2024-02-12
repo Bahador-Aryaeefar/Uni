@@ -5,7 +5,7 @@
                 class="bg-[rgba(255,255,255,0.05)] h-[5.2rem] absolute top-0 left-0 w-full flex items-center justify-between px-6 z-[1]">
                 <div class="items-center flex gap-2 text-white font-bold text-sm">
                     <img class="w-6" src="/icons/landing/profile.svg" alt="profile">
-                    نام و نام خانوادگی استاد
+                    {{useAuth().name.value ? useAuth().name.value : '-'}}
                 </div>
 
                 <img @click="useAuth().logout()" class="w-6 cursor-pointer" src="/icons/landing/logout.svg" alt="logout">
