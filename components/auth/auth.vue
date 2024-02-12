@@ -22,14 +22,14 @@
                     <input id="name" v-model="name"
                         :class="(isConfirmed && !name) ? 'border-[#EE0035]' : 'border-[#E1E2E4] hover:border-[#1470FA]'"
                         class="h-full px-6 w-full text-[#1C0E07] text-lg focus:outline-none bg-transparent placeholder:text-[#A69F9B] border-[0.125rem] focus:border-[#1470FA] rounded-full"
-                        type="text" placeholder="نام">
+                        type="text" placeholder="کد ملی">
                 </div>
 
                 <div class="h-14 w-[18rem] mobile:w-full relative">
                     <input id="password" v-model="password"
                         :class="(isConfirmed && !password) ? 'border-[#EE0035]' : 'border-[#E1E2E4] hover:border-[#1470FA]'"
                         class="h-full px-6 w-full text-[#1C0E07] text-lg focus:outline-none bg-transparent placeholder:text-[#A69F9B] border-[0.125rem] focus:border-[#1470FA] rounded-full"
-                        :type="isPass ? 'password' : 'text'" placeholder="رمز">
+                        :type="isPass ? 'password' : 'text'" placeholder="رمز عبور">
                     <img @click="isPass = !isPass"
                         class="w-6 absolute rtl:left-4 ltr:right-4 top-0 bottom-0 my-auto cursor-pointer"
                         :src="`/icons/auth/visibility${isPass ? '' : '-off'}.svg`" alt="visibility">
