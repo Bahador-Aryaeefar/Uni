@@ -17,25 +17,25 @@
         <div class="flex gap-3 mt-6 px-4 flex-wrap">
             <div class="flex grow shrink-0 w-[28rem] border-[0.125rem] border-[#E0E0E0] rounded-[0.5rem] overflow-hidden mobile:flex-wrap mobile:w-full">
                 <div @click="filter = 0"
-                    class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-l-[0.0625rem] border-b-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
+                    class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-l-[0.0625rem] mobile:border-b-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 0 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 0 ? 'text-[#212121]' : 'text-[#757575]'">کل دانشجویان</div>
                     <div class="text-sm" :class="filter == 0 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{students?.length}} نفر</div>
                 </div>
                 <div @click="filter = 1"
-                    class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-x-[0.0625rem] border-b-[0.0625rem] mobile:border-l-0 border-[#E0E0E0] flex flex-col justify-center gap-0.5 px-[0.625rem]"
+                    class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-x-[0.0625rem] mobile:border-b-[0.0625rem] mobile:border-l-0 border-[#E0E0E0] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 1 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 1 ? 'text-[#212121]' : 'text-[#757575]'">حاضرین</div>
                     <div class="text-sm" :class="filter == 1 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{students?.filter(x => x.status == 1)?.length}}  نفر</div>
                 </div>
                 <div @click="filter = 2"
-                    class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-x-[0.0625rem] border-t-[0.0625rem] mobile:border-r-0 border-[#E0E0E0] flex flex-col justify-center gap-0.5 px-[0.625rem]"
+                    class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-x-[0.0625rem] mobile:border-t-[0.0625rem] mobile:border-r-0 border-[#E0E0E0] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 2 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 2 ? 'text-[#212121]' : 'text-[#757575]'">غایبین</div>
                     <div class="text-sm" :class="filter == 2 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{students?.filter(x => x.status == 0)?.length}} نفر</div>
                 </div>
                 <div @click="filter = 3"
-                    class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-r-[0.0625rem] border-t-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
+                    class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-r-[0.0625rem] mobile:border-t-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 3 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 3 ? 'text-[#212121]' : 'text-[#757575]'">غایبین موجه</div>
                     <div class="text-sm" :class="filter == 3 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{students?.filter(x => x.status == 2)?.length}} نفر</div>
