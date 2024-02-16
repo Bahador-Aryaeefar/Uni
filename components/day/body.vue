@@ -55,6 +55,8 @@
             <DayStudent v-for="(item, index) in filtered" :num="index" :info="item" @stat="(next) => item.status = next">
             </DayStudent>
         </div>
+
+        <button @click="confirm" class="block h-14 rounded-[0.5rem] bg-[#1470FA] w-full text-white text-lg font-bold mt-12 max-w-[20rem] mx-auto">تایید</button>
     </div>
 </template>
 
@@ -97,4 +99,15 @@ const filtered = computed(() => {
     }
     return temp.filter(x => (x.firstName+x.lastName).toLowerCase().includes(search.value.toLowerCase()))
 })
+
+const confirm = () => {
+    let req = {}
+    req["runDayId"] = course?.session?.value?.day?.id
+    req.students = []
+    for(let s of students.value) {
+        req.students.push({"studentId" : s.id, "attendanceStatus": s.status})
+    }
+    console.log(req);
+    course.postAttendance(req)
+}
 </script>

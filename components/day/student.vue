@@ -85,5 +85,4 @@ const next = () => {
             break
     }
 }
-console.log(color.value);
 </script>

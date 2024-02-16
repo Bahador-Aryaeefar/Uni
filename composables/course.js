@@ -18,10 +18,10 @@ export const useCourse = () => {
                 console.log(error)
             },
             onResponse({ request, response, options }) {
-                // Process the response data    return response._data
+                // Process the response data
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
-                    return days.value = response?._data
+                    days.value = response?._data
                 }
             },
             onResponseError({ request, response, options }) {
@@ -46,10 +46,10 @@ export const useCourse = () => {
                 console.log(error)
             },
             onResponse({ request, response, options }) {
-                // Process the response data    return response._data
+                // Process the response data
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
-                    return students.value = response?._data?.data
+                    students.value = response?._data?.data
                 }
             },
             onResponseError({ request, response, options }) {
@@ -62,5 +62,34 @@ export const useCourse = () => {
         })
     }
 
-    return { getDays,getStudents, days, session, students }
+    const postAttendance = async (req) => {
+        students.value = null
+        console.log('postAttendance')
+        await useFetch('/api/Course/AddAttendance', {
+            method: 'POST',
+            body: req,
+            credentials: 'include',
+            baseURL: useBase().base.value,
+            onRequestError({ request, options, error, response }) {
+                // Handle the request errors
+                console.log(error)
+            },
+            onResponse({ request, response, options }) {
+                // Process the response data
+                console.log(response)
+                if (response.status == 200 || response.status == 201) {
+                    //
+                }
+            },
+            onResponseError({ request, response, options }) {
+                // Handle the response errors 
+                console.log(error)
+            },
+            initialCache: false,
+            server: false,
+
+        })
+    }
+
+    return { getDays, getStudents, postAttendance, days, session, students }
 }
