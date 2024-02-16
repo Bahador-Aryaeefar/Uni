@@ -105,9 +105,22 @@ const confirm = () => {
     req["runDayId"] = course?.session?.value?.day?.id
     req.students = []
     for(let s of students.value) {
-        req.students.push({"studentId" : s.id, "attendanceStatus": s.status})
+        req.students.push({"studentId" : s.id, "attendanceStatus": getStat(s.status)})
     }
     console.log(req);
     course.postAttendance(req)
+}
+
+const getStat = (stat) => {
+    switch(stat) {
+        case 0:
+            return 1
+        case 1:
+            return 0
+        case 2:
+            return 2
+        default: 
+            return 0
+    }
 }
 </script>

@@ -78,7 +78,7 @@ export const useCourse = () => {
                 // Process the response data
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
-                    //
+                    navigateTo('/')
                 }
             },
             onResponseError({ request, response, options }) {
