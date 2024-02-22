@@ -10,35 +10,42 @@
                 <div class="mt-2 text-[#757575] text-sm">کد درس: {{ course.session.value.serial }}</div>
             </div>
 
-            <div class="rounded-[0.25rem] p-2 text-xs text-[#757575] border-[0.125rem] border-[#EEEEEE] mr-8 whitespace-nowrap">گروه
+            <div
+                class="rounded-[0.25rem] p-2 text-xs text-[#757575] border-[0.125rem] border-[#EEEEEE] mr-8 whitespace-nowrap">
+                گروه
                 {{ course.session.value.unit }}</div>
         </div>
 
         <div class="flex gap-3 mt-6 px-4 flex-wrap">
-            <div class="flex grow shrink-0 w-[28rem] border-[0.125rem] border-[#E0E0E0] rounded-[0.5rem] overflow-hidden mobile:flex-wrap mobile:w-full">
+            <div
+                class="flex grow shrink-0 w-[28rem] border-[0.125rem] border-[#E0E0E0] rounded-[0.5rem] overflow-hidden mobile:flex-wrap mobile:w-full">
                 <div @click="filter = 0"
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-l-[0.0625rem] mobile:border-b-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 0 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 0 ? 'text-[#212121]' : 'text-[#757575]'">کل دانشجویان</div>
-                    <div class="text-sm" :class="filter == 0 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{students?.length}} نفر</div>
+                    <div class="text-sm" :class="filter == 0 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.length }} نفر
+                    </div>
                 </div>
                 <div @click="filter = 1"
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-x-[0.0625rem] mobile:border-b-[0.0625rem] mobile:border-l-0 border-[#E0E0E0] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 1 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 1 ? 'text-[#212121]' : 'text-[#757575]'">حاضرین</div>
-                    <div class="text-sm" :class="filter == 1 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{students?.filter(x => x.status == 1)?.length}}  نفر</div>
+                    <div class="text-sm" :class="filter == 1 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.filter(x =>
+                        x.status == 0)?.length }} نفر</div>
                 </div>
                 <div @click="filter = 2"
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-x-[0.0625rem] mobile:border-t-[0.0625rem] mobile:border-r-0 border-[#E0E0E0] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 2 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 2 ? 'text-[#212121]' : 'text-[#757575]'">غایبین</div>
-                    <div class="text-sm" :class="filter == 2 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{students?.filter(x => x.status == 0)?.length}} نفر</div>
+                    <div class="text-sm" :class="filter == 2 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.filter(x =>
+                        x.status == 1)?.length }} نفر</div>
                 </div>
                 <div @click="filter = 3"
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-r-[0.0625rem] mobile:border-t-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 3 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 3 ? 'text-[#212121]' : 'text-[#757575]'">غایبین موجه</div>
-                    <div class="text-sm" :class="filter == 3 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{students?.filter(x => x.status == 2)?.length}} نفر</div>
+                    <div class="text-sm" :class="filter == 3 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.filter(x =>
+                        x.status == 2)?.length }} نفر</div>
                 </div>
             </div>
 
@@ -56,7 +63,14 @@
             </DayStudent>
         </div>
 
-        <button @click="confirm" class="block h-14 rounded-[0.5rem] bg-[#1470FA] w-full text-white text-lg font-bold mt-12 max-w-[20rem] mx-auto">تایید</button>
+        <div class="flex justify-center gap-4 flex-wrap mt-12 px-6">
+            <button @click="navigateTo('/')"
+                class="block h-14 rounded-[0.5rem] bg-[#E91E63] w-full text-white text-lg font-bold max-w-[20rem]">انصراف</button>
+            <button @click="confirm"
+                class="block h-14 rounded-[0.5rem] bg-[#FF9800] w-full text-white text-lg font-bold max-w-[20rem]">ثبت موقت</button>
+            <button @click="confirm"
+                class="block h-14 rounded-[0.5rem] bg-[#4CAF50] w-full text-white text-lg font-bold max-w-[20rem]">ثبت نهایی</button>
+        </div>
     </div>
 </template>
 
@@ -88,39 +102,26 @@ const filtered = computed(() => {
             temp = students.value
             break
         case 1:
-            temp = students.value.filter(x => x.status == 1)
+            temp = students.value.filter(x => x.status == 0)
             break
         case 2:
-            temp = students.value.filter(x => x.status == 0)
+            temp = students.value.filter(x => x.status == 1)
             break
         case 3:
             temp = students.value.filter(x => x.status == 2)
             break
     }
-    return temp.filter(x => (x.firstName+x.lastName).toLowerCase().includes(search.value.toLowerCase()))
+    return temp.filter(x => (x.firstName + " " + x.lastName).toLowerCase().includes(search.value.toLowerCase()))
 })
 
 const confirm = () => {
     let req = {}
     req["runDayId"] = course?.session?.value?.day?.id
     req.students = []
-    for(let s of students.value) {
-        req.students.push({"studentId" : s.id, "attendanceStatus": getStat(s.status)})
+    for (let s of students.value) {
+        req.students.push({ "studentId": s.id, "attendanceStatus": s.status })
     }
     console.log(req);
     course.postAttendance(req)
-}
-
-const getStat = (stat) => {
-    switch(stat) {
-        case 0:
-            return 1
-        case 1:
-            return 0
-        case 2:
-            return 2
-        default: 
-            return 0
-    }
 }
 </script>

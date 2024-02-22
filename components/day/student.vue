@@ -20,18 +20,18 @@
             <div class="text-white text-sm font-bold text-center leading-[1.063rem] pt-6">{{ info.firstName }}</div>
             <div class="text-white text-sm font-bold text-center leading-[1.063rem]">{{ info.lastName }}</div>
         </div>
-        <div class="py-4 flex items-center gap-5 px-3">
-            <div>
+        <div class="py-4 flex items-center gap-4 px-3">
+            <div class="w-1/2">
                 <div class="text-[#9E9E9E] text-xs leading-[0.938rem]">وضعیت حضور</div>
                 <div :class="`flex items-center gap-1 ${color} text-sm leading-[1.063rem] mt-1`">
                     <div :class="`w-2 h-2 ${bgcolor} rounded-full mt-0.5`"></div>
                     {{ text }}
                 </div>
             </div>
-            <div>
+            <div class="w-1/2">
                 <div class="text-[#9E9E9E] text-xs leading-[0.938rem]">تعداد غیبت ها</div>
                 <div class="text-[#212121] text-sm leading-[1.063rem] mt-1">
-                    - غیبت
+                    {{ info.numberOfAbsences }} غیبت
                 </div>
             </div>
         </div>
@@ -44,9 +44,9 @@ const emit = defineEmits(['stat'])
 const bgcolor = computed(() => {
     switch (props.info.status) {
         case 0:
-            return 'bg-[#E91E63]'
-        case 1:
             return 'bg-[#4CAF50]'
+        case 1:
+            return 'bg-[#E91E63]'
         case 2:
             return 'bg-[#FF9800]'
     }
@@ -54,9 +54,9 @@ const bgcolor = computed(() => {
 const color = computed(() => {
     switch (props.info.status) {
         case 0:
-            return 'text-[#E91E63]'
-        case 1:
             return 'text-[#4CAF50]'
+        case 1:
+            return 'text-[#E91E63]'
         case 2:
             return 'text-[#FF9800]'
     }
@@ -64,9 +64,9 @@ const color = computed(() => {
 const text = computed(() => {
     switch (props.info.status) {
         case 0:
-            return 'غایب'
-        case 1:
             return 'حاضر'
+        case 1:
+            return 'غایب'
         case 2:
             return 'غایب موجه'
     }
