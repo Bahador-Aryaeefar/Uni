@@ -1,5 +1,7 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
-      const login = useAuth()
+      let login = null
+      if(useAuth()) login = useAuth()
+      else return
       if (login.isLogin()) {
             login.name.value = useCookie('name').value
             return
