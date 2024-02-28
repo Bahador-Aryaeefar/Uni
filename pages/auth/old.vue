@@ -1,6 +1,6 @@
 <template>
     <div class="mx-6">
-        <AuthSso></AuthSso>
+        <Auth></Auth>
     </div>
 </template>
 
