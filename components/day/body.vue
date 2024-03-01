@@ -14,6 +14,9 @@
                 class="rounded-[0.25rem] p-2 text-xs text-[#757575] border-[0.125rem] border-[#EEEEEE] mr-8 whitespace-nowrap">
                 گروه
                 {{ course.session.value.unit }}</div>
+
+            <div class="rounded-[0.25rem] p-2 text-xs m-3" :class="course.session.value.day.numberOfStudents ? 'bg-[#FF98001A] text-[#FF9800]' : 'bg-[#E91E631A] text-[#E91E63]'">{{ course.session.value.day.numberOfStudents ? 'ثبت موقت' : 'ثبت نشده' }}</div>
+
         </div>
 
         <div class="flex gap-3 mt-6 px-4 flex-wrap">
@@ -23,7 +26,8 @@
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-l-[0.0625rem] mobile:border-b-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 0 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 0 ? 'text-[#212121]' : 'text-[#757575]'">کل دانشجویان</div>
-                    <div class="text-sm" :class="filter == 0 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.length }} نفر
+                    <div class="text-sm" :class="filter == 0 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.length }}
+                        نفر
                     </div>
                 </div>
                 <div @click="filter = 1"
@@ -67,9 +71,11 @@
             <button @click="navigateTo('/main')"
                 class="block h-14 rounded-[0.5rem] bg-[#E91E63] w-full text-white text-lg font-bold max-w-[20rem]">انصراف</button>
             <button @click="confirm(0)"
-                class="block h-14 rounded-[0.5rem] bg-[#FF9800] w-full text-white text-lg font-bold max-w-[20rem]">ثبت موقت</button>
+                class="block h-14 rounded-[0.5rem] bg-[#FF9800] w-full text-white text-lg font-bold max-w-[20rem]">ثبت
+                موقت</button>
             <button @click="confirm(1)"
-                class="block h-14 rounded-[0.5rem] bg-[#4CAF50] w-full text-white text-lg font-bold max-w-[20rem]">ثبت نهایی</button>
+                class="block h-14 rounded-[0.5rem] bg-[#4CAF50] w-full text-white text-lg font-bold max-w-[20rem]">ثبت
+                نهایی</button>
         </div>
     </div>
 </template>
@@ -83,16 +89,29 @@ if (!course.session.value) navigateTo('/main')
 else course.getStudents(course?.session?.value?.day?.id)
 
 const students = ref(course?.students?.value?.map(x => {
-    x.status = 0
+    x.status = getStat(x.status)
     return x
 }))
 
 watch(() => course.students.value, (newS, oldS) => {
     students.value = course?.students?.value?.map(x => {
-        x.status = 0
+        x.status = getStat(x.status)
         return x
     })
 })
+
+const getStat = (s) => {
+    switch (s) {
+        case "حضور":
+            return 0
+        case "غیبت":
+            return 1
+        case "غیبت موجه":
+            return 2
+        default:
+            return 0
+    }
+}
 
 const filtered = computed(() => {
     if (!students.value) return

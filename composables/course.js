@@ -78,7 +78,8 @@ export const useCourse = () => {
                 // Process the response data
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
-                    navigateTo('/main')
+                    if(req.registrationType) navigateTo('/main')
+                    else getStudents(req.runDayId)
                 }
             },
             onResponseError({ request, response, options }) {
