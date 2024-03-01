@@ -131,6 +131,9 @@ export const useAuth = () => {
             onResponse({ request, response, options }) {
                 // Process the response data    return response._data
                 console.log(response)
+                name.value = null
+                role.value = null
+                navigateTo('/auth')
                 if (response.status == 200 || response.status == 201) {
                 }
             },
@@ -141,9 +144,6 @@ export const useAuth = () => {
             initialCache: false,
             server: false
         })
-        name.value = null
-        role.value = null
-        navigateTo('/auth')
     }
 
     return { loginProf, logout, isLogin, name, role, getUser,login, loginStudent }
