@@ -1,19 +1,18 @@
 export const useAuth = () => {
     const router = useRouter()
     const name = useState('name', () => null)
+    const role = useState('role', () => null)
 
     const isLogin = () => {
-        const cookie = useCookie('name')
-        if (cookie.value != null) {
+        if (name.value != null && role.value != null) {
             return true
         }
         return false
     }
 
-    const login = async (req) => {
-        console.log('login')
-        const cookie = useCookie('name')
-        await useFetch('/api/Account/Login', {
+    const loginProf = async (req) => {
+        console.log('loginProf')
+        await useFetch('/api/Account/LoginProfessor', {
             method: 'POST',
             body: req,
             credentials: 'include',
@@ -26,8 +25,7 @@ export const useAuth = () => {
                 // Process the response data    return response._data
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
-                    cookie.value = response?._data?.data?.fullNameUser
-                    navigateTo('/')
+                    navigateTo('/main')
                 }
             },
             onResponseError({ request, response, options }) {
@@ -39,9 +37,89 @@ export const useAuth = () => {
         })
     }
 
+    const loginStudent = async (req) => {
+        console.log('loginStudent')
+        await useFetch('/api/Account/LoginStudent', {
+            method: 'POST',
+            body: req,
+            credentials: 'include',
+            baseURL: useBase().base.value,
+            onRequestError({ request, options, error, response }) {
+                // Handle the request errors
+                console.log(error)
+            },
+            onResponse({ request, response, options }) {
+                // Process the response data    return response._data
+                console.log(response)
+                if (response.status == 200 || response.status == 201) {
+                    navigateTo('/main')
+                }
+            },
+            onResponseError({ request, response, options }) {
+                // Handle the response errors 
+                console.log(error)
+            },
+            initialCache: false,
+            server: false
+        })
+    }
+
+    const login = async (req) => {
+        console.log('login')
+        await useFetch('/api/Account/Login', {
+            method: 'GET',
+            credentials: 'include',
+            baseURL: useBase().base.value,
+            onRequestError({ request, options, error, response }) {
+                // Handle the request errors
+                console.log(error)
+            },
+            onResponse({ request, response, options }) {
+                // Process the response data    return response._data
+                console.log(response)
+                if (response.status == 200 || response.status == 201) {
+                    // navigateTo('/main')
+                }
+            },
+            onResponseError({ request, response, options }) {
+                // Handle the response errors 
+                console.log(error)
+            },
+            initialCache: false,
+            server: false
+        })
+    }
+
+    const getUser = async (req) => {
+        console.log('getUser')
+        await useFetch('/api/Account/CurrentUserInfo', {
+            method: 'GET',
+            credentials: 'include',
+            baseURL: useBase().base.value,
+            onRequestError({ request, options, error, response }) {
+                // Handle the request errors
+                console.log(error)
+            },
+            onResponse({ request, response, options }) {
+                // Process the response data    return response._data
+                console.log(response)
+                if (response.status == 200 || response.status == 201) {
+                    name.value = response?._data?.data?.fullNameUser
+                    role.value = response?._data?.data?.role
+                }
+            },
+            onResponseError({ request, response, options, error }) {
+                // Handle the response errors 
+                console.log(error)
+                if(response.status == 401) logout()
+            },
+            initialCache: false,
+            server: false
+        })
+    }
+
     const logout = async () => {
         console.log('Logout')
-        const cookie = useCookie('name')
         await useFetch('/api/Account/Logout', {
             method: 'GET',
             credentials: 'include',
@@ -54,9 +132,6 @@ export const useAuth = () => {
                 // Process the response data    return response._data
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
-                    navigateTo('/auth')
-                    cookie.value = null
-                    name.value = null
                 }
             },
             onResponseError({ request, response, options }) {
@@ -66,7 +141,10 @@ export const useAuth = () => {
             initialCache: false,
             server: false
         })
+        name.value = null
+        role.value = null
+        navigateTo('/auth')
     }
 
-    return { login, logout, isLogin, name }
+    return { loginProf, logout, isLogin, name, role, getUser,login, loginStudent }
 }

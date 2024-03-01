@@ -2,18 +2,18 @@
     <div class="fixed left-0 top-0 w-[100vw] h-[100vh] z-[10] flex break-words overflow-auto px-10 bg-[#1470FA] mobile:px-4">
         <div class="w-[42rem] bg-white rounded-[1rem] py-6 px-10 m-auto mobile:px-4">
             <h1 class="text-[2rem] font-bold leading-[3.5rem] text-[#1470FA] text-center">
-                {{ !isLogin ? "ثبت نام" : "ورود" }}
+                ورود
             </h1>
 
-            <div v-if="false" class="flex p-1 h-[2.5rem] bg-[#F7F7F9] rounded-full text-[#514037] w-[13.25rem] mx-auto mt-4">
+            <div class="flex p-1 h-[2.5rem] bg-[#F7F7F9] rounded-full text-[#514037] w-[13.25rem] mx-auto mt-4">
                 <div class="w-1/2 cursor-pointer flex items-center justify-center rounded-full"
                     :class="!isLogin ? 'text-[#1470FA] bg-white' : ''" @click="isLogin = false">
-                    ثبت نام
+                    دانشجو
                 </div>
 
                 <div class="w-1/2 cursor-pointer flex items-center justify-center rounded-full"
                     :class="isLogin ? 'text-[#1470FA] bg-white' : ''" @click="isLogin = true">
-                    ورود
+                    استاد
                 </div>
             </div>
 
@@ -65,10 +65,11 @@ const isConfirmed = ref(false)
 
 const auth = useAuth()
 const getAuth = () => {
-    if (isLogin.value) login()
+    if (isLogin.value) loginProf()
+    else loginStudent()
 }
 
-const login = () => {
+const loginProf = () => {
     isConfirmed.value = true
     let isValid = true
 
@@ -83,6 +84,24 @@ const login = () => {
     }
 
     console.log(req)
-    auth.login(req)
+    auth.loginProf(req)
+}
+
+const loginStudent = () => {
+    isConfirmed.value = true
+    let isValid = true
+
+    if (!name.value) isValid = false
+    if (!password.value) isValid = false
+
+    if (!isValid) return
+
+    const req = {
+        userName: name.value,
+        password: password.value
+    }
+
+    console.log(req)
+    auth.loginStudent(req)
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div v-if="course.session.value">
         <div class="flex items-center py-5 px-[2.25rem] bg-[#F5F5F5] border-b-[0.125rem] border-b-[#EEEEEE] mobile:px-6">
-            <NuxtLink class="shrink-0" to="/">
+            <NuxtLink class="shrink-0" to="/main">
                 <img class="w-6 h-6" src="/icons/day/back.svg" alt="back">
             </NuxtLink>
 
@@ -64,11 +64,11 @@
         </div>
 
         <div class="flex justify-center gap-4 flex-wrap mt-12 px-6">
-            <button @click="navigateTo('/')"
+            <button @click="navigateTo('/main')"
                 class="block h-14 rounded-[0.5rem] bg-[#E91E63] w-full text-white text-lg font-bold max-w-[20rem]">انصراف</button>
-            <button @click="confirm"
+            <button @click="confirm(0)"
                 class="block h-14 rounded-[0.5rem] bg-[#FF9800] w-full text-white text-lg font-bold max-w-[20rem]">ثبت موقت</button>
-            <button @click="confirm"
+            <button @click="confirm(1)"
                 class="block h-14 rounded-[0.5rem] bg-[#4CAF50] w-full text-white text-lg font-bold max-w-[20rem]">ثبت نهایی</button>
         </div>
     </div>
@@ -78,7 +78,7 @@
 const search = ref('')
 const filter = ref(0)
 const course = useCourse()
-if (!course.session.value) navigateTo('/')
+if (!course.session.value) navigateTo('/main')
 
 else course.getStudents(course?.session?.value?.day?.id)
 
@@ -114,13 +114,14 @@ const filtered = computed(() => {
     return temp.filter(x => (x.firstName + " " + x.lastName).toLowerCase().includes(search.value.toLowerCase()))
 })
 
-const confirm = () => {
+const confirm = (type) => {
     let req = {}
     req["runDayId"] = course?.session?.value?.day?.id
     req.students = []
     for (let s of students.value) {
         req.students.push({ "studentId": s.id, "attendanceStatus": s.status })
     }
+    req.registrationType = type
     console.log(req);
     course.postAttendance(req)
 }
