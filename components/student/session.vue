@@ -48,12 +48,12 @@
         <div class="mt-[3.75rem]" v-else>
             <div class="text-[#212121] font-bold text-[2rem]  text-center">سر کلاس حاضر هستید؟</div>
 
-            <div @click="student.addAttendance(course.session.value.runDayId)" class="mt-[3.875rem] w-[16rem] h-[16rem] relative mx-auto cursor-pointer circle">
+            <div @click="student.addAttendance(course.session.value.runDayId)" class="mt-[3.875rem] w-[16rem] h-[16rem] mobile:w-[12.5rem] mobile:h-[12.5rem] relative mx-auto cursor-pointer circle">
                 <div class="absolute w-full h-full bg-[#4CAF50] opacity-[0.4] circle1"></div>
                 <div class="absolute w-full h-full bg-[#4CAF50] opacity-[0.4] circle2"></div>
                 <div class="absolute w-full h-full bg-[#4CAF50] opacity-[0.4] circle3"></div>
                 <div
-                    class="absolute w-full h-full bg-[#4CAF50] rounded-full flex items-center justify-center text-white  text-xl font-bold text-white">
+                    class="absolute w-full h-full bg-[#4CAF50] rounded-full flex items-center justify-center text-white  text-xl font-bold text-white mobile:text-lg">
                     بله؛ ثبت حضور
                 </div>
             </div>

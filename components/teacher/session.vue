@@ -23,7 +23,7 @@
         </div>
 
 
-        <div v-if="course.students.value?.attendanceByStudentStatus" class="px-8 mobile:px-4 flex justify-between mt-8">
+        <div v-if="course.students.value?.attendanceByStudentStatus" class="px-8 mobile:px-4 flex justify-between items-center mt-8 mobile:flex-col gap-8">
             <div class="flex items-center gap-3">
                 <img class="w-[2.25rem]" src="/icons/day/people.svg" alt="people">
                 <div class="text-[#292D32] font-bold">
