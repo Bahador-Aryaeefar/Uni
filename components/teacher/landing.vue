@@ -5,7 +5,7 @@
                 <h3 class="text-white text-sm font-bold">کلاس های فعال</h3>
                 <div
                     class="grid gap-6 mt-6 grid-cols-[repeat(3,1fr)] tablet:grid-cols-[repeat(2,1fr)] mobile:grid-cols-[repeat(1,1fr)]">
-                    <Class v-for="item in classes?.filter(x => x.isActive)" :info="item" class=""></Class>
+                    <TeacherClassOn v-for="item in classes?.filter(x => x.isActive)" :info="item" class=""></TeacherClassOn>
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
             <h3 class="text-black text-sm font-bold">کلاس های غیر فعال</h3>
             <div
                 class="grid gap-6 mt-6 grid-cols-[repeat(3,1fr)] tablet:grid-cols-[repeat(2,1fr)] mobile:grid-cols-[repeat(1,1fr)]">
-                <ClassOff v-for="item in classes?.filter(x => !x.isActive)" :info="item" class=""></ClassOff>
+                <TeacherClassOff v-for="item in classes?.filter(x => !x.isActive)" :info="item" class=""></TeacherClassOff>
             </div>
         </div>
     </div>

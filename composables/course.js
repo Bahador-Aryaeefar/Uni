@@ -62,6 +62,33 @@ export const useCourse = () => {
         })
     }
 
+    const updateStudents = async (id) => {
+        console.log('updateStudents')
+        await useFetch('/api/Course/GetAllStudents/' + id, {
+            method: 'Get',
+            credentials: 'include',
+            baseURL: useBase().base.value,
+            onRequestError({ request, options, error, response }) {
+                // Handle the request errors
+                console.log(error)
+            },
+            onResponse({ request, response, options }) {
+                // Process the response data
+                console.log(response)
+                if (response.status == 200 || response.status == 201) {
+                    students.value = response?._data?.data
+                }
+            },
+            onResponseError({ request, response, options }) {
+                // Handle the response errors 
+                console.log(error)
+            },
+            initialCache: false,
+            server: false,
+
+        })
+    }
+
     const postAttendance = async (req) => {
         students.value = null
         console.log('postAttendance')
@@ -78,7 +105,7 @@ export const useCourse = () => {
                 // Process the response data
                 console.log(response)
                 if (response.status == 200 || response.status == 201) {
-                    if(req.registrationType) navigateTo('/main')
+                    if (req.registrationType) navigateTo('/main')
                     else getStudents(req.runDayId)
                 }
             },
@@ -92,5 +119,33 @@ export const useCourse = () => {
         })
     }
 
-    return { getDays, getStudents, postAttendance, days, session, students }
+    const attendanceByStudent = async (req) => {
+        console.log('attendanceByStudent')
+        await useFetch('/api/Course/AttendanceByStudent', {
+            method: 'POST',
+            body: req,
+            credentials: 'include',
+            baseURL: useBase().base.value,
+            onRequestError({ request, options, error, response }) {
+                // Handle the request errors
+                console.log(error)
+            },
+            onResponse({ request, response, options }) {
+                // Process the response data
+                console.log(response)
+                if (response.status == 200 || response.status == 201) {
+                    getStudents(req.runDayId)
+                }
+            },
+            onResponseError({ request, response, options }) {
+                // Handle the response errors 
+                console.log(error)
+            },
+            initialCache: false,
+            server: false,
+
+        })
+    }
+
+    return { getDays, getStudents, updateStudents, postAttendance, days, session, students, attendanceByStudent }
 }

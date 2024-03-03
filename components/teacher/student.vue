@@ -1,5 +1,5 @@
 <template>
-    <div @click="next" class="rounded-[0.5rem] overflow-hidden h-[8.75rem] bg-[#F5F5F5] w-[13rem] cursor-pointer">
+    <div @click="next" class="rounded-[0.5rem] overflow-hidden h-[8.75rem] bg-[#F5F5F5] w-[13rem]" :class="isActive ? 'cursor-pointer' : ''">
         <div :class="`h-[4.5rem] ${bgcolor} w-full relative`">
             <div class="w-[6.25rem] h-[6.25rem] rounded-full bg-[#FAFAFA] absolute left-0 right-0 mx-auto -top-[5.313rem]">
             </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-const props = defineProps(['num', 'info'])
+const props = defineProps(['num', 'info','isActive'])
 const emit = defineEmits(['stat'])
 const bgcolor = computed(() => {
     switch (props.info.status) {
@@ -73,6 +73,7 @@ const text = computed(() => {
 })
 
 const next = () => {
+    if(!props.isActive) return
     switch (props.info.status) {
         case 0:
             emit('stat',1)

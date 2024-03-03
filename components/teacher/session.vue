@@ -1,6 +1,7 @@
 <template>
-    <div v-if="course.session.value">
-        <div class="flex items-center py-5 px-[2.25rem] bg-[#F5F5F5] border-b-[0.125rem] border-b-[#EEEEEE] mobile:px-6">
+    <div v-if="course.session.value && course.students.value">
+        <div
+            class="flex items-center py-5 px-[2.25rem] bg-[#F5F5F5] border-b-[0.125rem] border-b-[#EEEEEE] mobile:px-6">
             <NuxtLink class="shrink-0" to="/main">
                 <img class="w-6 h-6" src="/icons/day/back.svg" alt="back">
             </NuxtLink>
@@ -15,18 +16,46 @@
                 گروه
                 {{ course.session.value.unit }}</div>
 
-            <div class="rounded-[0.25rem] p-2 text-xs m-3" :class="course.session.value.day.numberOfStudents ? 'bg-[#FF98001A] text-[#FF9800]' : 'bg-[#E91E631A] text-[#E91E63]'">{{ course.session.value.day.numberOfStudents ? 'ثبت موقت' : 'ثبت نشده' }}</div>
+            <div class="rounded-[0.25rem] p-2 text-xs m-3"
+                :class="course.session.value.day.numberOfStudents ? 'bg-[#FF98001A] text-[#FF9800]' : 'bg-[#E91E631A] text-[#E91E63]'">
+                {{ course.session.value.day.numberOfStudents ? 'ثبت موقت' : 'ثبت نشده' }}</div>
 
         </div>
 
-        <div class="flex gap-3 mt-6 px-4 flex-wrap">
+
+        <div v-if="course.students.value?.attendanceByStudentStatus" class="px-8 mobile:px-4 flex justify-between mt-8">
+            <div class="flex items-center gap-3">
+                <img class="w-[2.25rem]" src="/icons/day/people.svg" alt="people">
+                <div class="text-[#292D32] font-bold">
+                    <span class="text-[2rem]">{{
+        students?.filter(x =>
+            x.status == 0)?.length }}</span><span class="opacity-[0.4] px-2">نفر از</span><span
+                        class="text-[2rem]">{{ students?.length
+                        }}</span><span class="opacity-[0.4] px-2">نفر حاضری زده اند.</span>
+                </div>
+            </div>
+            <button @click="course.attendanceByStudent({ runDayId: course?.session?.value?.day?.id, status: 1 })"
+                class="h-16 w-full rounded-[1rem] bg-[#1470FA] text-white font-bold text-sm max-w-[26rem] bg-[#FA452D] px-4 flex justify-center items-center gap-2.5">
+                <img class="w-6" src="/icons/day/pause.svg" alt="pause">
+                توقف فرایند حضور و غیاب
+            </button>
+        </div>
+
+        <div v-else class="px-8 mobile:px-4">
+            <button @click="course.attendanceByStudent({ runDayId: course?.session?.value?.day?.id, status: 0 })"
+                class="h-16 w-full rounded-[1rem] bg-[#1470FA] text-white font-bold text-sm max-w-[26rem] mx-auto block mt-8 px-4">شروع
+                فرایند حضور و غیاب توسط دانشجو</button>
+        </div>
+
+        <div class="flex gap-3 mt-8 px-4 flex-wrap">
             <div
                 class="flex grow shrink-0 w-[28rem] border-[0.125rem] border-[#E0E0E0] rounded-[0.5rem] overflow-hidden mobile:flex-wrap mobile:w-full">
                 <div @click="filter = 0"
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-l-[0.0625rem] mobile:border-b-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 0 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 0 ? 'text-[#212121]' : 'text-[#757575]'">کل دانشجویان</div>
-                    <div class="text-sm" :class="filter == 0 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.length }}
+                    <div class="text-sm" :class="filter == 0 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.length
+                        }}
                         نفر
                     </div>
                 </div>
@@ -34,22 +63,25 @@
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-x-[0.0625rem] mobile:border-b-[0.0625rem] mobile:border-l-0 border-[#E0E0E0] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 1 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 1 ? 'text-[#212121]' : 'text-[#757575]'">حاضرین</div>
-                    <div class="text-sm" :class="filter == 1 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.filter(x =>
-                        x.status == 0)?.length }} نفر</div>
+                    <div class="text-sm" :class="filter == 1 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{
+        students?.filter(x =>
+            x.status == 0)?.length }} نفر</div>
                 </div>
                 <div @click="filter = 2"
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-x-[0.0625rem] mobile:border-t-[0.0625rem] mobile:border-r-0 border-[#E0E0E0] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 2 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 2 ? 'text-[#212121]' : 'text-[#757575]'">غایبین</div>
-                    <div class="text-sm" :class="filter == 2 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.filter(x =>
-                        x.status == 1)?.length }} نفر</div>
+                    <div class="text-sm" :class="filter == 2 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{
+        students?.filter(x =>
+            x.status == 1)?.length }} نفر</div>
                 </div>
                 <div @click="filter = 3"
                     class="w-1/4 mobile:w-1/2 h-[3.375rem] cursor-pointer border-r-[0.0625rem] mobile:border-t-[0.0625rem] flex flex-col justify-center gap-0.5 px-[0.625rem]"
                     :class="filter == 3 ? 'bg-[#F5F5F5]' : 'bg-[#FAFAFA]'">
                     <div class="text-sm" :class="filter == 3 ? 'text-[#212121]' : 'text-[#757575]'">غایبین موجه</div>
-                    <div class="text-sm" :class="filter == 3 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{ students?.filter(x =>
-                        x.status == 2)?.length }} نفر</div>
+                    <div class="text-sm" :class="filter == 3 ? 'text-[#757575]' : 'text-[#9E9E9E]'">{{
+        students?.filter(x =>
+            x.status == 2)?.length }} نفر</div>
                 </div>
             </div>
 
@@ -63,11 +95,13 @@
 
         <div class="grid flex-wrap  mt-[3.625rem] px-[3rem] gap-y-[2.25rem] gap-x-3 auto-cols-auto place-content-center"
             style="grid-template-columns: repeat(auto-fill, minmax(13rem, max-content))">
-            <DayStudent v-for="(item, index) in filtered" :num="index" :info="item" @stat="(next) => item.status = next">
-            </DayStudent>
+            <TeacherStudent v-for="(item, index) in filtered" :num="index" :info="item" :isActive="!course.students.value?.attendanceByStudentStatus"
+                @stat="(next) => item.status = next">
+            </TeacherStudent>
         </div>
 
-        <div class="flex justify-center gap-4 flex-wrap mt-12 px-6">
+        <div v-if="!course.students.value?.attendanceByStudentStatus"
+            class="flex justify-center gap-4 flex-wrap mt-12 px-6">
             <button @click="navigateTo('/main')"
                 class="block h-14 rounded-[0.5rem] bg-[#E91E63] w-full text-white text-lg font-bold max-w-[20rem]">انصراف</button>
             <button @click="confirm(0)"
@@ -88,13 +122,13 @@ if (!course.session.value) navigateTo('/main')
 
 else course.getStudents(course?.session?.value?.day?.id)
 
-const students = ref(course?.students?.value?.map(x => {
+const students = ref(course?.students?.value?.students?.map(x => {
     x.status = getStat(x.status)
     return x
 }))
 
 watch(() => course.students.value, (newS, oldS) => {
-    students.value = course?.students?.value?.map(x => {
+    students.value = course?.students?.value?.students?.map(x => {
         x.status = getStat(x.status)
         return x
     })
@@ -144,4 +178,12 @@ const confirm = (type) => {
     console.log(req);
     course.postAttendance(req)
 }
+
+const check = setInterval(() => {
+    if(course?.students?.value?.attendanceByStudentStatus) course.updateStudents(course?.session?.value?.day?.id)
+}, 3000)
+
+onUnmounted(() => {
+    clearInterval(check)
+})
 </script>

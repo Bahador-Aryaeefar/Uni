@@ -1,15 +1,9 @@
 <template>
     <div v-if="useAuth()?.role?.value">
-        <div v-if="useAuth()?.role?.value == 'Professor'">
-            <LandingNavbar class="z-[1] relative"></LandingNavbar>
-            <LandingBody></LandingBody>
-            <LandingFooter></LandingFooter>
-        </div>
-        <div v-else>
-            <StudentNavbar></StudentNavbar>
-            <Student></Student>
-            <StudentFooter></StudentFooter>
-        </div>
+        <MainNavbar class="z-[1] relative"></MainNavbar>
+        <TeacherLanding v-if="useAuth()?.role?.value == 'Professor'"></TeacherLanding>
+        <StudentLanding v-else></StudentLanding>
+        <MainFooter></MainFooter>
     </div>
 </template>
 
@@ -18,5 +12,6 @@ definePageMeta({
     // layout: 'main',
     middleware: ["auth"]
 })
-</script>
 
+useAuth().getUser()
+</script>
