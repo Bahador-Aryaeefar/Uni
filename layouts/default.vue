@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-[110rem] mx-auto pb-[20rem]" dir="rtl">
+    <div class="max-w-[110rem] mx-auto pb-[10rem]" dir="rtl">
         <slot/>
     </div>
 </template>
